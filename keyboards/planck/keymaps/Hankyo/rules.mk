@@ -5,8 +5,8 @@ AUTO_SHIFT_MODIFIERS = yes
 
 BOOTMAGIC_ENABLE = no   # virtual DIP switch configuration(+1000)
 EXTRAKEY_ENABLE  = yes   # audio control and System control(+450)
-CONSOLE_ENABLE   = no   # console for debug(+400)
-#COMMAND_ENABLE   = yes   # commands for debug and configuration
+CONSOLE_ENABLE   = yes   # console for debug(+400)
+COMMAND_ENABLE   = yes   # commands for debug and configuration
 BACKLIGHT_ENABLE = no   # enable keyboard backlight functionality
 MIDI_ENABLE      = no   # MIDI controls
 AUDIO_ENABLE     = yes   # audio output on port C6
