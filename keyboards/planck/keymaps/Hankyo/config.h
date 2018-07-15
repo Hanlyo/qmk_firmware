@@ -37,4 +37,32 @@
 /* override number of MIDI tone keycodes (each octave adds 12 keycodes and allocates 12 bytes) */
 //#define MIDI_TONE_KEYCODE_OCTAVES 2
 
+
+
+
+
+
+
+
+
+
+// my custom configurations
+
+
+
+#define AUTO_SHIFT_TIMEOUT 150
+#define NO_AUTO_SHIFT_SPECIAL
+
+
+
+
+
+
+
+
+
+
+
+
+
 #endif
