@@ -17,12 +17,79 @@
 #include "planck.h"
 #include "action_layer.h"
 
+
+
+
+
+
+
+
+#define N_LT KC_NONUS_BSLASH
+#define N_HS KC_NONUS_HASH
+#define N_DOTS RALT(KC_DOT) // …
+#define N_USC LSFT(KC_SLASH) // _
+#define N_LSQBR RALT(KC_8) // [
+#define N_RSQBR RALT(KC_9) // ]
+#define N_CIRC KC_GRAVE // ^
+#define N_EXKL LSFT(KC_1) // !
+#define N_GT LSFT(KC_NONUS_BSLASH) // >
+#define N_EQ LSFT(KC_0) // =
+#define N_AMP LSFT(KC_6) // &
+#define N_BSLS RALT(KC_MINS) // \ backslash
+#define N_SLSH LSFT(KC_7) // /
+#define N_LCUBR RALT(KC_7) // {
+#define N_RCUBR RALT(KC_0) // }
+#define N_ASTR LSFT(KC_RBRC) // *
+#define N_QUES LSFT(KC_MINS) // ?
+#define N_LPARN LSFT(KC_8) // (
+#define N_RPARN LSFT(KC_9) // )
+#define N_MINS KC_SLASH // -
+#define N_COLN LSFT(KC_DOT) // :
+#define N_HASH KC_BSLASH // #
+#define N_DLR LSFT(KC_4) // $
+#define N_PIPE RALT(KC_NONUS_BSLASH) // |
+#define N_TILD RALT(KC_RBRC) // ~
+#define N_GRAVE LSFT(KC_EQUAL) // `
+#define N_PLUS KC_RBRC // +
+#define N_PERC LSFT(KC_5) // %
+#define N_QUOT LSFT(KC_2) // "
+#define N_SING LSFT(KC_BSLASH) // '
+#define N_SEMI LSFT(KC_COMM) // ;
+#define N_EURO RALT(KC_E) // €
+#define N_AT RALT(KC_Q) // @
+#define N_Z KC_Y
+#define N_Y KC_Z
+#define N_AE KC_QUOTE // ä
+#define N_OE KC_SCOLON // ö
+#define N_UE KC_LBRACKET // ü
+#define N_MU RALT(KC_M) // µ
+#define N_SS KC_MINS // ß
+#define N_DEGRE LSFT(KC_GRAVE) // °
+#define N_PASTE LCTL(KC_V) // CTRL+V
+#define N_COPY LCTL(KC_C) // CTRL+C
+#define N_CUT LCTL(KC_X) // CTRL+X
+#define N_UNDO LCTL(N_Z) // CTRL+Z
+
+
+#define _______ KC_TRNS
+#define XXXXXXX KC_NO
+
+
+
+
+
+
+
+
+
+
 extern keymap_config_t keymap_config;
 
 enum planck_layers {
   _QWERTY,
   _COLEMAK,
   _DVORAK,
+  _NEO,
   _LOWER,
   _RAISE,
   _PLOVER,
@@ -33,6 +100,7 @@ enum planck_keycodes {
   QWERTY = SAFE_RANGE,
   COLEMAK,
   DVORAK,
+  NEO,
   PLOVER,
   BACKLIT,
   EXT_PLV
@@ -96,6 +164,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {KC_LSFT, KC_SCLN, KC_Q,    KC_J,    KC_K,    KC_X,    KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    KC_ENT },
   {BACKLIT, KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT}
 },
+
+
+
+/* Neo
+ * ,-----------------------------------------------------------------------------------.
+ * | Tab  |   x  |   v  |   l  |   c  |   w  |   k  |   h  |   g  |   f  |   q  | Bksp |
+ * |------+------+------+------+------+-------------+------+------+------+------+------|
+ * | Esc  |   u  |   i  |   a  |   e  |   o  |   s  |   n  |   r  |   f  |   f  |  /   |
+ * |------+------+------+------+------+------|------+------+------+------+------+------|
+ * | Shift|   y  |   <  |   #  |   p  |   z  |   b  |   m  |   ,  |   .  |   j  |Enter |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * | Brite| Ctrl | Alt  | GUI  |Lower |    Space    |Raise | Left | Down |  Up  |Right |
+ * `-----------------------------------------------------------------------------------'
+ */
+[_NEO] = {
+  {KC_X,    KC_V,    KC_L,    KC_C,    KC_P,    KC_W,    KC_K,    KC_H,    KC_G,    KC_F,    KC_Q,    KC_BSPC},
+  {KC_ESC,  KC_U,    KC_I,    KC_A,    KC_E,    KC_O,    KC_S,    KC_N,    KC_R,    KC_T,    KC_D,    KC_SLSH},
+  {KC_LSFT, N_Y,     N_LT,    N_HS,    KC_P,    N_Z,     KC_B,    KC_M,    KC_COMM, KC_DOT,  KC_J,    KC_ENT },
+  {BACKLIT, KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT}
+},
+
+
+
+
 
 /* Lower
  * ,-----------------------------------------------------------------------------------.
@@ -167,7 +259,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {_______, RESET,   DEBUG,    RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, KC_DEL },
   {_______, _______, MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  COLEMAK, DVORAK,  PLOVER,  _______},
   {_______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  TERM_ON, TERM_OFF, _______, _______, _______},
-  {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______}
+  {_______, _______, _______, _______, _______, KC_ASDN, KC_ASUP, _______, KC_ASRP, _______, _______, _______}
 }
 
 
@@ -203,6 +295,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
+      case NEO:
+        if (record->event.pressed) {
+          set_single_persistent_default_layer(_NEO);
+        }
+        return false;
+        break;
     case BACKLIT:
       if (record->event.pressed) {
         register_code(KC_RSFT);
