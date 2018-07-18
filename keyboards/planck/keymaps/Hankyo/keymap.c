@@ -240,7 +240,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
-    case COLEMAK:
+/*    case COLEMAK:
       if (record->event.pressed) {
         set_single_persistent_default_layer(_COLEMAK);
       }
@@ -251,7 +251,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         set_single_persistent_default_layer(_DVORAK);
       }
       return false;
-      break;
+      break;*/
       case NEO:
         if (record->event.pressed) {
           set_single_persistent_default_layer(_NEO);
@@ -279,6 +279,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         #endif
         layer_off(_RAISE);
         layer_off(_LOWER);
+        layer_off(_MOUSE);
         layer_off(_ADJUST);
         layer_on(_PLOVER);
         if (!eeconfig_is_enabled()) {
