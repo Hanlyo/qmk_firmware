@@ -68,6 +68,8 @@ enum planck_layers {
 enum planck_keycodes {
   QWERTY = SAFE_RANGE,
   NEO,
+  RAISE,
+  LOWER,
   PLOVER,
   BACKLIT,
   EXT_PLV
@@ -231,8 +233,46 @@ uint32_t layer_state_set_user(uint32_t state) {
   return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 }
 
+
+
+
+/*
+uint32_t layer_state_set_user(uint32_t state) {
+    switch (biton32(state)) {
+    case _RAISE:
+        rgblight_setrgb (0x00,  0x00, 0xFF);
+        break;
+    case _LOWER:
+        rgblight_setrgb (0xFF,  0x00, 0x00);
+        break;
+    default: //  for any other layers, or the default layer
+        break;
+    }
+  return state;
+}
+*/
+
+
+
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
+
+    case LOWER:
+      if (record->event.pressed) {
+        layer_off(_RAISE);
+      }
+      return false;
+      break;
+      case RAISE:
+        if (record->event.pressed) {
+          layer_off(_LOWER);
+        }
+        return false;
+        break;
+
+
+
     case QWERTY:
       if (record->event.pressed) {
         print("mode just switched to qwerty and this is a huge string\n");
