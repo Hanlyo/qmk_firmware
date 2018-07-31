@@ -199,7 +199,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_RAISE] = {
   {_______, N_OE,    N_PIPE,  N_LPARN, N_RPARN, _______, _______, KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______},
   {_______, N_AE,    _______, N_LCUBR, N_RCUBR, N_LSQBR, N_RSQBR, KC_F5,   KC_F6,   KC_F7,   KC_F8,   _______},
-  {_______, N_UE,    N_SS,    DE_MORE, DE_LESS, DE_SLSH, N_BSLS,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   _______},
+  {_______, N_UE,    N_SS,    DE_LESS, DE_MORE, DE_SLSH, N_BSLS,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   _______},
   {_______, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY}
 },
 
