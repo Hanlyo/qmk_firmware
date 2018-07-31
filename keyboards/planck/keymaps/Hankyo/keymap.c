@@ -24,7 +24,8 @@
 #define N_RPARN LSFT(KC_9) // )
 #define N_MINS KC_SLASH // -
 #define N_COLN LSFT(KC_DOT) // :
-#define N_HASH KC_BSLASH // #
+//#define N_HASH KC_BSLASH // #
+#define N_ABRL KC_BSLASH // <
 #define N_DLR LSFT(KC_4) // $
 #define N_PIPE RALT(KC_NONUS_BSLASH) // |
 #define N_TILD RALT(KC_RBRC) // ~
@@ -32,7 +33,8 @@
 #define N_PLUS KC_RBRC // +
 #define N_PERC LSFT(KC_5) // %
 #define N_QUOT LSFT(KC_2) // "
-#define N_SING LSFT(KC_BSLASH) // '
+//#define N_SING LSFT(KC_BSLASH) // '
+#define N_ABRR LSFT(KC_BSLASH) // >
 #define N_SEMI LSFT(KC_COMM) // ;
 #define N_EURO RALT(KC_E) // €
 #define N_AT RALT(KC_Q) // @
@@ -49,6 +51,8 @@
 #define N_CUT LCTL(KC_X) // CTRL+X
 #define N_UNDO LCTL(N_Z) // CTRL+Z
 
+
+#define C_SHIFT TT(KC_LSFT)
 
 
 
@@ -95,7 +99,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_QWERTY] = {
   {KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_DEL },
   {KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    N_QUES , N_SLSH },
-  {KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT },
+  {C_SHIFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT },
   {KC_LCTL, KC_LALT, KC_LGUI, MOUSE,   LOWER,   KC_SPC,  KC_BSPC, RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT}
 },
 
@@ -155,7 +159,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_RAISE] = {
   {_______, N_OE,    N_PIPE,  N_LPARN, N_RPARN, _______, _______, KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______},
   {_______, N_AE,    _______, N_LCUBR, N_RCUBR, N_LSQBR, N_RSQBR, KC_F5,   KC_F6,   KC_F7,   KC_F8,   _______},
-  {_______, N_UE,    N_SS,    KC_LT,   KC_GT,   N_SLSH,  N_BSLS,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   _______},
+  {_______, N_UE,    N_SS,    KC_LT,   N_ABRL,  N_ABRR,  N_BSLS,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   _______},
   {_______, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY}
 },
 
