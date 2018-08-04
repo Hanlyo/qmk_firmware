@@ -65,11 +65,11 @@ static tap xtap_state = {
 void x_finished (qk_tap_dance_state_t *state, void *user_data) {
   xtap_state.state = cur_dance(state);
   switch (xtap_state.state) {
-    case SINGLE_TAP: register_code(KC_X); break;
-    case SINGLE_HOLD: register_code(KC_LCTRL); break;
-    case DOUBLE_TAP: register_code(KC_ESC); break;
-    case DOUBLE_HOLD: register_code(KC_LALT); break;
-    case DOUBLE_SINGLE_TAP: register_code(KC_X); unregister_code(KC_X); register_code(KC_X);
+    case SINGLE_TAP: register_code(KC_LSFT); break;
+    case SINGLE_HOLD: register_code(KC_LSFT); break;
+    case DOUBLE_TAP: register_code(KC_CAPS); break;
+    // case DOUBLE_HOLD: register_code(KC_LALT); break;
+    // case DOUBLE_SINGLE_TAP: register_code(KC_X); unregister_code(KC_X); register_code(KC_X);
     //Last case is for fast typing. Assuming your key is `f`:
     //For example, when typing the word `buffer`, and you want to make sure that you send `ff` and not `Esc`.
     //In order to type `ff` when typing fast, the next character will have to be hit within the `TAPPING_TERM`, which by default is 200ms.
@@ -78,11 +78,11 @@ void x_finished (qk_tap_dance_state_t *state, void *user_data) {
 
 void x_reset (qk_tap_dance_state_t *state, void *user_data) {
   switch (xtap_state.state) {
-    case SINGLE_TAP: unregister_code(KC_X); break;
-    case SINGLE_HOLD: unregister_code(KC_LCTRL); break;
-    case DOUBLE_TAP: unregister_code(KC_ESC); break;
-    case DOUBLE_HOLD: unregister_code(KC_LALT);
-    case DOUBLE_SINGLE_TAP: unregister_code(KC_X);
+    case SINGLE_TAP: unregister_code(KC_LSFT); break;
+    case SINGLE_HOLD: unregister_code(KC_LSFT); break;
+    case DOUBLE_TAP: unregister_code(KC_CAPS); break;
+    // case DOUBLE_HOLD: unregister_code(KC_LALT);
+    // case DOUBLE_SINGLE_TAP: unregister_code(KC_X);
   }
   xtap_state.state = 0;
 }
