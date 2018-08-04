@@ -37,6 +37,7 @@
 /* override number of MIDI tone keycodes (each octave adds 12 keycodes and allocates 12 bytes) */
 //#define MIDI_TONE_KEYCODE_OCTAVES 2
 
+#define ENCODER_RESOLUTION 4
 
 
 
@@ -50,18 +51,21 @@
 
 
 // Mouse stuff
-
+/*
 #define MOUSEKEY_DELAY             170
 #define MOUSEKEY_INTERVAL          50
 #define MOUSEKEY_MAX_SPEED         5
 #define MOUSEKEY_TIME_TO_MAX       8
 #define MOUSEKEY_WHEEL_MAX_SPEED   8
 #define MOUSEKEY_WHEEL_TIME_TO_MAX 40
+*/
 
 
 // Taptoggle stuff
 
 #define TAPPING_TOGGLE 2
+
+
 
 
 

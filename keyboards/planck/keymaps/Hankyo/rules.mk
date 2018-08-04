@@ -2,7 +2,7 @@
 
 
 
-TAP_DANCE_ENABLE    = no   # Enable TapDance functionality
+TAP_DANCE_ENABLE    = yes   # Enable TapDance functionality (+100)
 BOOTMAGIC_ENABLE    = no    # Virtual DIP switch configuration(+1000)
 MOUSEKEY_ENABLE     = no    # Mouse keys(+4700)
 EXTRAKEY_ENABLE     = yes    # Audio control and System control(+450)
@@ -22,7 +22,7 @@ RGBLIGHT_ENABLE     = no    # Enable WS2812 RGB underlight.  Do not enable this 
 SLEEP_LED_ENABLE    = no    # Breathing sleep LED during USB suspend
 
 
-MOUSEKEY_ENABLE = yes	 # (+1700)
+MOUSEKEY_ENABLE = no	 # (+1700)
 
 AUTO_SHIFT_ENABLE = yes
 AUTO_SHIFT_MODIFIERS = yes

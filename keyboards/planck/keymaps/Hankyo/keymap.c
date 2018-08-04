@@ -1,6 +1,7 @@
 
 #include "planck.h"
 #include "action_layer.h"
+#include "Hankyo.h"
 
 
 #define N_LT KC_NONUS_BSLASH
@@ -104,7 +105,7 @@ enum planck_layers {
   _NEO,
   _LOWER,
   _RAISE,
-  _MOUSE,
+//  _MOUSE,
   _PLOVER,
   _ADJUST
 };
@@ -119,9 +120,10 @@ enum planck_keycodes {
   EXT_PLV
 };
 
+
 #define LOWER TT(_LOWER)
 #define RAISE TT(_RAISE)
-#define MOUSE TG(_MOUSE)
+//#define MOUSE TG(_MOUSE)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -139,8 +141,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_QWERTY] = {
   {KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_DEL },
   {KC_TAB,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    N_QUES , N_SLSH },
-  {KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT },
-  {KC_LCTL, KC_LALT, KC_LGUI, MOUSE,   LOWER,   KC_SPC,  KC_BSPC, RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT}
+  {KC_LSFT, KC_Z,    TD(X_CTL),    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT },
+  {KC_LCTL, KC_LALT, KC_LGUI, LOWER,   LOWER,   KC_SPC,  KC_BSPC, RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT}
 },
 
 
@@ -160,7 +162,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {KC_ESC,  KC_X,    KC_V,    KC_L,    KC_C,    KC_W,    KC_K,    KC_H,    KC_G,    KC_F,    KC_Q,    KC_BSPC},
   {KC_TAB,  KC_U,    KC_I,    KC_A,    KC_E,    KC_O,    KC_S,    KC_N,    KC_R,    KC_T,    KC_D,    KC_SLSH},
   {KC_LSFT, N_Y,     N_LT,    N_HS,    KC_P,    N_Z,     KC_B,    KC_M,    KC_COMM, KC_DOT,  KC_J,    KC_ENT },
-  {KC_LCTL, KC_LALT, KC_LGUI, MOUSE,   LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT}
+  {KC_LCTL, KC_LALT, KC_LGUI, LOWER,   LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT}
 },
 
 
@@ -217,12 +219,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      |      |      |      |      | mbtn1| mbtn2|      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
+ /*
 [_MOUSE] = {
   {_______, _______, _______, KC_MS_U, _______, _______, _______, _______, KC_WH_U, _______, _______, _______},
   {_______, _______, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______, KC_WH_L, KC_WH_D, KC_WH_R, _______, _______},
   {_______, _______, _______, _______, _______, _______, KC_BTN3, _______, _______, _______, _______, _______},
   {_______, _______, _______, _______, _______, KC_BTN1, KC_BTN2, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY}
 },
+*/
 
 
 
@@ -364,7 +368,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         #endif
         layer_off(_RAISE);
         layer_off(_LOWER);
-        layer_off(_MOUSE);
+        //layer_off(_MOUSE);
         layer_off(_ADJUST);
         layer_on(_PLOVER);
         if (!eeconfig_is_enabled()) {
