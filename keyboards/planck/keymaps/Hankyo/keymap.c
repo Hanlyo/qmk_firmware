@@ -140,7 +140,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {_______, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9, KC_0,    _______},
   {_______, KC_HOME, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, DE_ASTR, KC_4,    KC_5,    KC_6, N_MINS,  _______},
   {_______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, N_SLSH,  KC_1,    KC_2,    KC_3, N_PLUS,  _______},
-  {_______, _______, _______, _______, _______, _______, _______, _______, KC_0, KC_COMM, KC_EQL,  _______}
+  {_______, _______, _______, _______, _______, _______, _______, _______, KC_0, KC_COMM, DE_EQL,  _______}
 },
 
 /* Raise
@@ -195,7 +195,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_SPACE_FN] = {
     {XXXXXXX,  KC_PGUP, KC_BSPC,  KC_UP,     KC_DEL,   KC_PGDN,  XXXXXXX,  XXXXXXX, XXXXXXX,  XXXXXXX,     XXXXXXX,    XXXXXXX},
     {XXXXXXX,  KC_HOME, KC_LEFT,  KC_DOWN,   KC_RGHT,  KC_END,   XXXXXXX,  XXXXXXX, XXXXXXX,  XXXXXXX,     XXXXXXX,    XXXXXXX},
-    {XXXXXXX,  XXXXXXX, XXXXXXX,  KC_ENT,    XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX, XXXXXXX,  XXXXXXX,     XXXXXXX,    XXXXXXX},
+    {XXXXXXX,  XXXXXXX, XXXXXXX,  XXXXXXX,   KC_ENT,   XXXXXXX,  XXXXXXX,  XXXXXXX, XXXXXXX,  XXXXXXX,     XXXXXXX,    XXXXXXX},
     {XXXXXXX,  XXXXXXX, XXXXXXX,  XXXXXXX,   XXXXXXX,  _______,  XXXXXXX,  XXXXXXX, KC_MNXT,  KC__VOLDOWN, KC__VOLUP,  KC_MPLY}
 },
 
