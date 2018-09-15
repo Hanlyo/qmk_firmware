@@ -2,6 +2,7 @@
 #include "planck.h"
 #include "action_layer.h"
 #include "Hankyo.h"
+#include "keymap_german.h"
 
 
 #define N_LT KC_NONUS_BSLASH
@@ -51,53 +52,6 @@
 #define N_UNDO LCTL(N_Z) // CTRL+Z
 
 
-
-
-
-#define DE_CIRC KC_GRAVE // accent circumflex ^ and ring °
-#define DE_ACUT KC_EQL // accent acute ´ and grave `
-#define DE_PLUS KC_RBRC // + and * and ~
-#define DE_HASH KC_BSLS // # and '
-#define DE_LESS KC_NUBS // < and > and |
-#define DE_MINS KC_SLSH // - and _
-
-// shifted characters
-#define DE_RING LSFT(DE_CIRC) // °
-#define DE_EXLM LSFT(KC_1) // !
-#define DE_DQOT LSFT(KC_2) // "
-#define DE_PARA LSFT(KC_3) // §
-#define DE_DLR  LSFT(KC_4) // $
-#define DE_PERC LSFT(KC_5) // %
-#define DE_AMPR LSFT(KC_6) // &
-#define DE_SLSH LSFT(KC_7) // /
-#define DE_LPRN LSFT(KC_8) // (
-#define DE_RPRN LSFT(KC_9) // )
-#define DE_EQL  LSFT(KC_0) // =
-#define DE_QST  LSFT(DE_SS) // ?
-#define DE_GRV  LSFT(DE_ACUT) // `
-#define DE_ASTR LSFT(DE_PLUS) // *
-#define DE_QUOT LSFT(DE_HASH) // '
-#define DE_MORE LSFT(DE_LESS) // >
-#define DE_COLN LSFT(KC_DOT) // :
-#define DE_SCLN LSFT(KC_COMM) // ;
-#define DE_UNDS LSFT(DE_MINS) // _
-
-// Alt Gr-ed characters
-#define DE_SQ2 ALGR(KC_2) // ²
-#define DE_SQ3 ALGR(KC_3) // ³
-#define DE_LCBR ALGR(KC_7) // {
-#define DE_LBRC ALGR(KC_8) // [
-#define DE_RBRC ALGR(KC_9) // ]
-#define DE_RCBR ALGR(KC_0) // }
-#define DE_BSLS ALGR(DE_SS) // backslash
-#define DE_AT  ALGR(KC_Q) // @
-#define DE_EURO ALGR(KC_E) // €
-#define DE_TILD ALGR(DE_PLUS) // ~
-#define DE_PIPE ALGR(DE_LESS) // |
-
-
-
-
 extern keymap_config_t keymap_config;
 
 enum planck_layers {
@@ -107,7 +61,9 @@ enum planck_layers {
   _RAISE,
 //  _MOUSE,
   _PLOVER,
-  _ADJUST
+  _ADJUST,
+  _FN,
+  _SPACE_FN
 };
 
 enum planck_keycodes {
@@ -124,6 +80,8 @@ enum planck_keycodes {
 #define LOWER TT(_LOWER)
 #define RAISE TT(_RAISE)
 //#define MOUSE TG(_MOUSE)
+#define FN MO(_FN)
+#define SPACE_FN LT(_SPACE_FN, KC_SPC)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -133,16 +91,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * | Tab  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ?  |  /   |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   -  |Enter |
+ * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   -  |Enter+Shift|
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * | Ctrl | Alt  | GUI  |Mouse |Lower |Space | Bksp |Raise | Left | Down |  Up  |Right |
+ * | Ctrl | Alt  | GUI  |  Fn  |Lower |Space+fn| Bksp |Raise | Left | Down |  Up  |Right |
  * `-----------------------------------------------------------------------------------'
  */
 [_QWERTY] = {
-  {KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_DEL },
-  {KC_TAB,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    N_QUES , N_SLSH },
-  {TD(X_CTL), KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT },
-  {KC_LCTL, KC_LALT, KC_LGUI, LOWER,   LOWER,   KC_SPC,  KC_BSPC, RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT}
+  {KC_ESC,   KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_DEL },
+  {KC_TAB,   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    N_QUES , N_SLSH },
+  {TD(X_CTL),KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, MT(MOD_LSFT, KC_ENT)},
+  {KC_LCTL,  KC_LALT, KC_LGUI, FN,      LOWER,   SPACE_FN,KC_BSPC, RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT}
 },
 
 
@@ -167,45 +125,79 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
 
-
-
 /* Lower
  * ,-----------------------------------------------------------------------------------.
- * |      | Pg up| Bksp |  Up  | Del  | Pg dn|      |   7  |   8  |   9  |   *  |      |
+ * |      |   1  |   2  |   3  |   4  |   5  |   6   |   7 |   8  |   9  |   0  |      |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      | Home | Left | Down | Right|  End |      |   4  |   5  |   6  |   +  |  /   |
+ * |      |      |      |      |      |      |   *  |   4  |   5  |   6  |   -  |      |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |      |  Tab |      | Enter|      |      |   1  |  2   |   3  |   -  |  =   |
+ * |      |      |      |      |      |      |   /  |   1  |   2  |   3  |   +  |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |   0  |      | Next | Vol- | Vol+ | Play |
+ * |      |      |      |      |      |      |      |      |   0  |   ,  |   =  |      |
  * `-----------------------------------------------------------------------------------'
  */
 [_LOWER] = {
-  {_______, KC_PGUP, KC_BSPC, KC_UP,   KC_DEL, KC_PGDN, _______, KC_7,       KC_8,       KC_9,    N_ASTR,  _______},
-  {_______, KC_HOME, KC_LEFT, KC_DOWN, KC_RGHT, KC_END,  _______, KC_4,       KC_5,       KC_6,    N_PLUS,  N_SLSH },
-  {_______, _______, KC_TAB,  _______, KC_ENT,  _______, _______, KC_1,       KC_2,       KC_3,    N_MINS,  N_EQ   },
-  {_______, _______, _______, _______, _______, _______, KC_0,    _______,    KC_MNXT,    KC_VOLD, KC_VOLU, KC_MPLY}
+  {_______, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9, KC_0,    _______},
+  {_______, KC_HOME, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, DE_ASTR, KC_4,    KC_5,    KC_6, N_MINS,  _______},
+  {_______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, N_SLSH,  KC_1,    KC_2,    KC_3, N_PLUS,  _______},
+  {_______, _______, _______, _______, _______, _______, _______, _______, KC_0, KC_COMM, KC_EQL,  _______}
 },
 
 /* Raise
  * ,-----------------------------------------------------------------------------------.
- * |      |   ö  |   |  |   (  |   )  |      |      |   F9 |  F10 |  F11 |  F12 |      |
+ * |      |   !  |   "  |   §  |   $  |   %  |   &  |   ü  |   @  |   ö  |      |      |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |   ä  |      |   {  |   }  |   [  |   ]  |   F5 |  F6  |  F7  |  F8  |      |
+ * |      |   ä  |   ß  |   {  |   (  |   [  |   ]  |   )  |   }  |      |   ’  |   |  |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |   ü  |  ss  |   <  |   >  |   /  |   \  |   F1 |  F2  |  F3  |  F4  |      |
+ * |      |   °  |   ~  |      |   /  |   <  |   >  |   \  |      |   #  |   €  |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |             |      | Next | Vol- | Vol+ | Play |
  * `-----------------------------------------------------------------------------------'
  */
 [_RAISE] = {
-  {_______, N_OE,    N_PIPE,  N_LPARN, N_RPARN, _______, _______, KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______},
-  {_______, N_AE,    _______, N_LCUBR, N_RCUBR, N_LSQBR, N_RSQBR, KC_F5,   KC_F6,   KC_F7,   KC_F8,   _______},
-  {_______, N_UE,    N_SS,    DE_LESS, DE_MORE, DE_SLSH, N_BSLS,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   _______},
-  {_______, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY}
+ {_______, DE_EXLM, DE_DQOT, DE_PARA, DE_DLR,  DE_PERC, DE_AMPR, N_UE,    DE_AT,   N_OE,    XXXXXXX, _______},
+ {_______, N_AE,    N_SS,    N_LCUBR, N_LPARN, N_LSQBR, N_RSQBR, N_RPARN, N_RCUBR, XXXXXXX, DE_QUOT, N_PIPE },
+ {_______, DE_RING, DE_TILD, XXXXXXX, DE_SLSH, DE_LESS, DE_MORE, N_BSLS,  XXXXXXX, DE_HASH, DE_EURO, _______},
+ {_______, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY}
 },
 
 
+/* fn
+ * ,-----------------------------------------------------------------------------------.
+ * |DelWrd|  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  | F10  | Del  |
+ * |------+------+------+------+------+-------------+------+------+------+------+------|
+ * |      |  F11 |  F12 |      |      |      |      |      |      |      |      |      |
+ * |------+------+------+------+------+------|------+------+------+------+------+------|
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |    Space    |      |      |      |      |      |
+ * `-----------------------------------------------------------------------------------'
+ */
+[_FN] = {
+    {LALT(KC_BSPC), KC_F1,   KC_F2,   KC_F3,   KC_F4,    KC_F5,    KC_F6,    KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL },
+    {XXXXXXX,       KC_F11,  KC_F12,  XXXXXXX, XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX},
+    {XXXXXXX,       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX},
+    {XXXXXXX,       XXXXXXX, XXXXXXX, _______, XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX}
+},
+
+
+/* Space fn
+ * ,-----------------------------------------------------------------------------------.
+ * |       | Pg Up| Bksp |  Up  |  Del | Pg Dn|      |      |      |      |      |      |
+ * |-------+------+------+------+------+-------------+------+------+------+------+------|
+ * |       | Home | Left | Down | Right| End  |      |      |      |      |      |      |
+ * |-------+------+------+------+------+------|------+------+------+------+------+------|
+ * |       |      |      |      |Return|      |      |      |      |      |      |      |
+ * |-------+------+------+------+------+------+------+------+------+------+------+------|
+ * |       |      |      |      |      |             |      | Next |VOLDWN|VOL UP| Play |
+ * `-----------------------------------------------------------------------------------'
+ */
+[_SPACE_FN] = {
+    {XXXXXXX,  KC_PGUP, KC_BSPC,  KC_UP,     KC_DEL,   KC_PGDN,  XXXXXXX,  XXXXXXX, XXXXXXX,  XXXXXXX,     XXXXXXX,    XXXXXXX},
+    {XXXXXXX,  KC_HOME, KC_LEFT,  KC_DOWN,   KC_RGHT,  KC_END,   XXXXXXX,  XXXXXXX, XXXXXXX,  XXXXXXX,     XXXXXXX,    XXXXXXX},
+    {XXXXXXX,  XXXXXXX, XXXXXXX,  KC_ENT,    XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX, XXXXXXX,  XXXXXXX,     XXXXXXX,    XXXXXXX},
+    {XXXXXXX,  XXXXXXX, XXXXXXX,  XXXXXXX,   XXXXXXX,  _______,  XXXXXXX,  XXXXXXX, KC_MNXT,  KC__VOLDOWN, KC__VOLUP,  KC_MPLY}
+},
 
 
 /* Mouse
@@ -253,20 +245,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Adjust (Lower + Raise)
  * ,-----------------------------------------------------------------------------------.
- * |      | Reset|      |      |      |      |      |      |      |      |      | Toggle autoshift|
+ * | Reset|Qwerty|  Neo |Plover|      |      |      |      |      |Aud on|Audoff|TGAutoshift|
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |      |      |Aud on|Audoff|AGnorm|AGswap|Qwerty|      |  Neo |Plover|      |
+ * |      |      |      |      |      |AGnorm|AGswap|      |      |Mus on|Musoff|MusMode|
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |Voice-|Voice+|Mus on|Musoff|      |      |      |      |      |      |      |
+ * |      |      |      |      |      |      |      |      |      |Voice+|Voice-|      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |             |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 [_ADJUST] = {
-  {_______, RESET,   DEBUG,   _______, _______, _______, _______, _______, _______, _______, _______, KC_ASTG},
-  {_______, _______, MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP,  QWERTY,   NEO  , _______,  PLOVER, _______},
-  {_______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  KC_ASDN, KC_ASUP, KC_ASTG, KC_ASRP, _______, _______, _______},
-  {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______}
+  {RESET,   QWERTY,  PLOVER,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, AU_ON,   AU_OFF,  KC_ASTG},
+  {XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, AG_NORM, AG_SWAP, XXXXXXX, XXXXXXX, MU_ON,   MU_OFF,  MU_MOD },
+  {XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, MUV_DE,  MUV_IN,  XXXXXXX},
+  {XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, XXXXXXX, XXXXXXX, _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX}
 }
 
 

@@ -46,7 +46,7 @@
 
 // Autoshift stuff
 
-#define AUTO_SHIFT_TIMEOUT 140
+#define AUTO_SHIFT_TIMEOUT 150
 #define NO_AUTO_SHIFT_SPECIAL
 
 
