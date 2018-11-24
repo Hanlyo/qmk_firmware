@@ -56,6 +56,7 @@ extern keymap_config_t keymap_config;
 
 enum planck_layers {
   _QWERTY,
+  _GAME,
   _NEO,
   _LOWER,
   _RAISE,
@@ -68,6 +69,7 @@ enum planck_layers {
 
 enum planck_keycodes {
   QWERTY = SAFE_RANGE,
+  GAME,
   NEO,
   RAISE,
   LOWER,
@@ -87,7 +89,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Qwerty
  * ,-----------------------------------------------------------------------------------.
- * | Esc  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Del |
+ * | Esc  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  |  Del |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * | Tab  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ?  |  /   |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
@@ -101,6 +103,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {KC_TAB,   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    N_QUES , N_SLSH },
   {TD(X_CTL),KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, MT(MOD_LSFT, KC_ENT)},
   {KC_LCTL,  KC_LALT, KC_LGUI, FN,      LOWER,   SPACE_FN,KC_BSPC, RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT}
+},
+
+
+
+/* Game
+ * ,-----------------------------------------------------------------------------------.
+ * | Esc  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  |  Del |
+ * |------+------+------+------+------+-------------+------+------+------+------+------|
+ * | Tab  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ?  |  /   |
+ * |------+------+------+------+------+------|------+------+------+------+------+------|
+ * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   -  |Enter |
+ * |------+------+------+------+------+------|------+------+------+------+------+------|
+ * | Ctrl | Alt  | GUI  |  Fn  |Lower |Space | Bksp |Raise | Left | Down |  Up  |Right |
+ * `-----------------------------------------------------------------------------------'
+ */
+[_GAME] = {
+  {KC_ESC,   KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_DEL },
+  {KC_TAB,   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    N_QUES , N_SLSH },
+  {X_CTL,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT },
+  {KC_LCTL,  KC_LALT, KC_LGUI, FN,      LOWER,   KC_SPC,  KC_BSPC, RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT}
 },
 
 
@@ -245,7 +267,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Adjust (Lower + Raise)
  * ,-----------------------------------------------------------------------------------.
- * | Reset|Qwerty|  Neo |Plover|      |      |      |      |      |Aud on|Audoff|TGAutoshift|
+ * | Reset|Qwerty|  Neo |Plover|      | Game |      |      |      |Aud on|Audoff|TGAutoshift|
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * |      |      |      |      |      |AGnorm|AGswap|      |      |Mus on|Musoff|MusMode|
  * |------+------+------+------+------+------|------+------+------+------+------+------|
@@ -255,7 +277,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_ADJUST] = {
-  {RESET,   QWERTY,  PLOVER,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, AU_ON,   AU_OFF,  KC_ASTG},
+  {RESET,   QWERTY,  PLOVER,  XXXXXXX, XXXXXXX, GAME,    GAME,    XXXXXXX, XXXXXXX, AU_ON,   AU_OFF,  KC_ASTG},
   {XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, AG_NORM, AG_SWAP, XXXXXXX, XXXXXXX, MU_ON,   MU_OFF,  MU_MOD },
   {XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, MUV_DE,  MUV_IN,  XXXXXXX},
   {XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, XXXXXXX, XXXXXXX, _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX}
@@ -336,6 +358,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       case NEO:
         if (record->event.pressed) {
           set_single_persistent_default_layer(_NEO);
+        }
+        return false;
+        break;
+
+      case GAME:
+        if (record->event.pressed) {
+          set_single_persistent_default_layer(_GAME);
         }
         return false;
         break;
