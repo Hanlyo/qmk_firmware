@@ -72,9 +72,9 @@ enum planck_keycodes {
   GAME,
   NEO,
   RAISE,
-  LOWER,
+  LOWER//,
 //  PLOVER,
-  BACKLIT//,
+//  BACKLIT//,
 //  EXT_PLV
 };
 
@@ -368,7 +368,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
         return false;
         break;
-    case BACKLIT:
+    /*case BACKLIT:
       if (record->event.pressed) {
         register_code(KC_RSFT);
         #ifdef BACKLIGHT_ENABLE
@@ -380,7 +380,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         PORTE |= (1<<6);
       }
       return false;
-      break;
+      break;*/
 /*    case PLOVER:
       if (record->event.pressed) {
         #ifdef AUDIO_ENABLE
