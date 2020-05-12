@@ -142,7 +142,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {KC_ESC,  KC_X,    KC_V,    KC_L,    KC_C,    KC_W,    KC_K,    KC_H,    KC_G,    KC_F,    KC_Q,    KC_BSPC},
   {KC_TAB,  KC_U,    KC_I,    KC_A,    KC_E,    KC_O,    KC_S,    KC_N,    KC_R,    KC_T,    KC_D,    KC_SLSH},
   {KC_LSFT, N_Y,     N_LT,    N_HS,    KC_P,    N_Z,     KC_B,    KC_M,    KC_COMM, KC_DOT,  KC_J,    KC_ENT },
-  {KC_LCTL, KC_LALT, KC_LGUI, LOWER,   LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT}
+  {KC_LCTL, KC_LALT, KC_LGUI, FN,      LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT}
 },
 
 
@@ -277,7 +277,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_ADJUST] = {
-  {RESET,   QWERTY,  PLOVER,  XXXXXXX, XXXXXXX, GAME,    GAME,    XXXXXXX, XXXXXXX, AU_ON,   AU_OFF,  KC_ASTG},
+  {RESET,   QWERTY,  PLOVER,  NEO,     XXXXXXX, GAME,    GAME,    XXXXXXX, XXXXXXX, AU_ON,   AU_OFF,  KC_ASTG},
   {XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, AG_NORM, AG_SWAP, XXXXXXX, XXXXXXX, MU_ON,   MU_OFF,  MU_MOD },
   {XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, MUV_DE,  MUV_IN,  XXXXXXX},
   {XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, XXXXXXX, XXXXXXX, _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX}
