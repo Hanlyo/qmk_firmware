@@ -9,7 +9,6 @@ EXTRAKEY_ENABLE     = yes    # Audio control and System control(+450)
 CONSOLE_ENABLE      = no    # Console for debug(+400)
 COMMAND_ENABLE      = no    # Commands for debug and configuration
 NKRO_ENABLE         = yes   # Nkey Rollover (+300) - if this doesn't work, see here: https://github.com/tmk/tmk_keyboard/wiki/FAQ#nkro-doesnt-work
-USB_6KRO_ENABLE     = no    # 6key Rollover
 BACKLIGHT_ENABLE    = no    # Enable keyboard backlight functionality
 MIDI_ENABLE         = no    # MIDI controls
 AUDIO_ENABLE        = yes    # Audio output on port C6 (+9400)
