@@ -2,7 +2,7 @@
 
 
 
-TAP_DANCE_ENABLE    = yes   # Enable TapDance functionality (+100)
+TAP_DANCE_ENABLE    = no   # Enable TapDance functionality (+100)
 BOOTMAGIC_ENABLE    = no    # Virtual DIP switch configuration(+1000)
 MOUSEKEY_ENABLE     = no    # Mouse keys(+4700)
 EXTRAKEY_ENABLE     = yes    # Audio control and System control(+450)
