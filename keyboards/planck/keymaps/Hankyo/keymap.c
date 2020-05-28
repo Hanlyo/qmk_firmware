@@ -2,7 +2,7 @@
 #include "planck.h"
 #include "action_layer.h"
 #include "Hankyo.h"
-#include "keymap_german.h"
+//#include "keymap_german.h"
 
 
 #define N_LT KC_NONUS_BSLASH
