@@ -17,15 +17,3 @@ enum {
   TRIPLE_TAP = 6,
   TRIPLE_HOLD = 7
 };
-
-//Tap dance enums
-enum {
-  X_CTL = 0,
-  SOME_OTHER_DANCE
-};
-
-int cur_dance (qk_tap_dance_state_t *state);
-
-//for the x tap dance. Put it here so it can be used in any keymap
-void x_finished (qk_tap_dance_state_t *state, void *user_data);
-void x_reset (qk_tap_dance_state_t *state, void *user_data);
