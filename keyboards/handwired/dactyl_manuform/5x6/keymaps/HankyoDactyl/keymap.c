@@ -2,7 +2,7 @@
 
 #include QMK_KEYBOARD_H
 #include "keymap_german.h"
-#include "HankyoDaktyl.h"
+/*#include "HankyoDaktyl.h"*/
 
 #define _QWERTY 0
 #define _LOWER 1
