@@ -21,9 +21,9 @@ enum {
 //Tap dance enums
 enum {
   X_CTL = 0,
-  TD_COPY_PASTE,
+
   SOME_OTHER_DANCE
-};
+};  //TD_COPY_PASTE,
 
 int cur_dance (qk_tap_dance_state_t *state);
 

@@ -62,6 +62,7 @@ static tap xtap_state = {
   .state = 0
 };
 
+
 void x_finished (qk_tap_dance_state_t *state, void *user_data) {
   xtap_state.state = cur_dance(state);
   switch (xtap_state.state) {
@@ -87,7 +88,7 @@ void x_reset (qk_tap_dance_state_t *state, void *user_data) {
   xtap_state.state = 0;
 }
 
-
+/*
 void tap_dance_copy_paste_finished (qk_tap_dance_state_t *state, void *user_data) {
   xtap_state.state = cur_dance(state);
   switch (xtap_state.state) {
@@ -99,8 +100,9 @@ void tap_dance_copy_paste_finished (qk_tap_dance_state_t *state, void *user_data
      break;
   }
 }
-
+*/
 qk_tap_dance_action_t tap_dance_actions[] = {
-  [X_CTL]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL,x_finished, x_reset),
-  [TD_COPY_PASTE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tap_dance_copy_paste_finished, NULL)
+  [X_CTL]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL,x_finished, x_reset)
+  //,
+  //[TD_COPY_PASTE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tap_dance_copy_paste_finished, NULL)
 };
