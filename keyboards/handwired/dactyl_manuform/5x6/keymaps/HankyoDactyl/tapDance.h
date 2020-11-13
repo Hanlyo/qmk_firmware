@@ -19,7 +19,8 @@ enum {
   SYMBOL,
   FUNCTION,
   LBRC,
-  RBRC
+  RBRC,
+  ESC
 };
 
 
@@ -136,12 +137,26 @@ void RBRCFunction (qk_tap_dance_state_t *state, void *user_data) {
 }
 
 
+void ESCFunction (qk_tap_dance_state_t *state, void *user_data) {
+
+  switch (cur_dance(state)) {
+    case SINGLE_TAP:
+        register_code(KC_ESC);
+    break;
+    case DOUBLE_TAP:
+        layer_clear();
+    break;
+  }
+}
+
+
 
 qk_tap_dance_action_t tap_dance_actions[] = {
   [SYMBOL]     = ACTION_TAP_DANCE_FN_ADVANCED     (NULL, changeSymbolLayerFin, changeSymbolLayerRes),
   [FUNCTION]     = ACTION_TAP_DANCE_FN_ADVANCED     (NULL, changeFunctionLayerFin, changeFunctionLayerRes),
   [LBRC]     = ACTION_TAP_DANCE_FN     (LBRCFunction),
-  [RBRC]     = ACTION_TAP_DANCE_FN     (RBRCFunction)
+  [RBRC]     = ACTION_TAP_DANCE_FN     (RBRCFunction),
+  [ESC]     = ACTION_TAP_DANCE_FN     (ESCFunction)
   //,
   //[TD_COPY_PASTE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tap_dance_copy_paste_finished, NULL)
 };

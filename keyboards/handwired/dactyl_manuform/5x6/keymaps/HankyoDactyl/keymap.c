@@ -11,6 +11,7 @@
 #define REDO    LCTL(DE_Y)
 #define CTL_D   LCTL(KC_D)
 #define DEL_WRD LALT(KC_BSPC)
+#define SAVE    LCTL(KC_S)
 
 
 // one shot modifierer
@@ -24,46 +25,66 @@
 #define TD_ARW  TD(ARROW)
 #define TD_SYMB  TD(SYMBOL)
 #define TD_FNC  TD(FUNCTION)
+#define TD_ESC  TD(ESC)
 
 
-// layer
+// one shot layer
 #define OSL_ARW  OSL(_ARROW)
 #define OSL_ARW  OSL(_ARROW)
+#define OSL_COP OSL(_COPY)
 #define OSL_SYM  OSL(_SYMBOL)
 #define OSL_FUN  OSL(_FUNCTION)
+
+// default layer
+#define DF_QWER  DF(_QWERTY)
+#define DF_DVOR  DF(_DVORAK)
+//#define DF_GAME  DF(_GAME)
+
+// other layer
 //#define RAISE MO(_RAISE)
 //#define LOWER MO(_LOWER)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_QWERTY] = LAYOUT_5x6(
-     KC_ESC , KC_1  , KC_2  , KC_3  , KC_4  , KC_5  ,                         KC_6  , KC_7  , KC_8  , KC_9  , KC_0  ,KC_DEL,
+     TD_ESC , KC_1  , KC_2  , KC_3  , KC_4  , KC_5  ,                         KC_6  , KC_7  , KC_8  , KC_9  , KC_0  ,KC_DEL,
      KC_TAB , KC_Q  , KC_W  , KC_E  , KC_R  , KC_T  ,                         KC_Y  , KC_U  , KC_I  , KC_O  , KC_P  ,_______,
      OS_SFT , KC_A  , KC_S  , KC_D  , KC_F  , KC_G  ,                         KC_H  , KC_J  , KC_K  , KC_L  ,DE_QUES,OS_SFT ,
      OS_CTL , KC_Z  , KC_X  , KC_C  , KC_V  , KC_B  ,                         KC_N  , KC_M  ,KC_COMM,KC_DOT ,KC_SLSH,OS_CTL ,
-                     _______,KC_LALT,                                                       KC_LGUI, _______,
+                     OSL_SYM,KC_LALT,                                                       KC_LGUI, OSL_SYM,
                                       KC_DEL, KC_SPC,                        KC_ENT ,KC_BSPC,
-                                     OSL_SYM,OSL_ARW,                        OSL_FUN ,OSL_SYM,
-                                     _______,_______,                        _______,_______
+                                     OSL_ARW, OS_SFT,                        OS_SFT ,OSL_ARW,
+                                     OSL_COP,OSL_FUN,                        OSL_FUN,OSL_COP
   ),
 
   [_DVORAK] = LAYOUT_5x6(
-     KC_ESC , KC_1  , KC_2  , KC_3  , KC_4  , KC_5  ,                         KC_6  , KC_7  , KC_8  , KC_9  , KC_0  ,KC_DEL,
+     TD_ESC , KC_1  , KC_2  , KC_3  , KC_4  , KC_5  ,                         KC_6  , KC_7  , KC_8  , KC_9  , KC_0  ,KC_DEL,
      KC_TAB ,DE_QUES,KC_COMM,KC_DOT , KC_P  , KC_Y  ,                         KC_F  , KC_G  , KC_C  , KC_T  , KC_Z  ,_______,
      OS_SFT , KC_A  , KC_O  , KC_E  , KC_I  , KC_U  ,                         KC_H  , KC_D  , KC_R  , KC_N  , KC_S  ,OS_SFT ,
      OS_CTL ,KC_SLSH, KC_Q  , KC_J  , KC_K  , KC_X  ,                         KC_B  , KC_M  , KC_W  , KC_V  , KC_L  ,OS_CTL ,
-                     _______,_______,                                                       _______, _______,
-                                      KC_DEL,KC_SPC ,                        KC_ENT ,KC_BSPC,
-                                     OSL_SYM,OSL_ARW,                        OSL_FUN ,OSL_SYM,
-                                     _______,_______,                        _______,_______
+                     OSL_SYM,KC_LALT,                                                       KC_LGUI, OSL_SYM,
+                                      KC_DEL, KC_SPC,                        KC_ENT ,KC_BSPC,
+                                     OSL_ARW, OS_SFT,                        OS_SFT ,OSL_ARW,
+                                     OSL_COP,OSL_FUN,                        OSL_FUN,OSL_COP
   ),
 
   [_ARROW] = LAYOUT_5x6(
      _______,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,                        XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,_______,
      _______,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,                        XXXXXXX,KC_PGUP, KC_UP ,KC_PGDN,XXXXXXX,XXXXXXX,
-     _______,XXXXXXX, CUT   , COPY  , PASTE ,XXXXXXX,                        KC_HOME,KC_LEFT,KC_DOWN,KC_RGHT,KC_END ,XXXXXXX,
-     _______,XXXXXXX,XXXXXXX, UNDO  , REDO  ,XXXXXXX,                        XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,KC_VOLU,KC_MNXT,
-                     _______,_______,                                                        KC_MPLY,KC_VOLD,
+     _______,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,                        KC_HOME,KC_LEFT,KC_DOWN,KC_RGHT,KC_END ,XXXXXXX,
+     _______,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,                        XXXXXXX,XXXXXXX,KC_MPLY,KC_VOLD,KC_VOLU,KC_MNXT,
+                     _______,_______,                                                        _______,_______,
+                                        _______,_______,                  _______,_______,
+                                        _______,_______,                  _______,_______,
+                                        _______,_______,                  _______,_______
+  ),
+
+[_COPY] = LAYOUT_5x6(
+     _______,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,                        XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,_______,
+     _______,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,                        XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,
+     _______,XXXXXXX, SAVE  ,XXXXXXX,XXXXXXX,XXXXXXX,                        XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,
+     _______, REDO  , CUT   , COPY  , PASTE , UNDO  ,                        XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,
+                     _______,_______,                                                        XXXXXXX,XXXXXXX,
                                         _______,_______,                  _______,_______,
                                         _______,_______,                  _______,_______,
                                         _______,_______,                  _______,_______
@@ -104,10 +125,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_SETTINGS] = LAYOUT_5x6(
-     _______,_______,_______,_______,_______,_______,                        _______,_______,_______,_______,_______,_______,
-     _______,_______,_______,_______,_______,_______,                        _______,_______,_______,_______,_______,_______,
-     _______,_______,_______,_______,_______,_______,                        _______,_______,_______,_______,_______,_______,
-     _______,_______,_______,_______,_______,_______,                        _______,_______,_______,_______,_______,_______,
+     _______,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,                        XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,_______,
+     _______,DF_QWER,XXXXXXX,DF_DVOR,XXXXXXX,XXXXXXX,                        XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,
+     _______,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,                        XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,
+     _______,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,                        XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,
                      _______,_______,                                                        _______,_______,
                                         _______,_______,                  _______,_______,
                                         _______,_______,                  _______,_______,
@@ -151,3 +172,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 */
 };
 
+
+
+uint32_t layer_state_set_user(uint32_t state) {
+  return update_tri_layer_state(state, _FUNCTION, _SYMBOL, _SETTINGS);
+}

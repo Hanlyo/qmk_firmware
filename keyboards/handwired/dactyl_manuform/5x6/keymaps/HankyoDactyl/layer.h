@@ -1,9 +1,11 @@
 #define _QWERTY 0
 #define _DVORAK 1
+#define _GAME 2
 //#define _LOWER 2
 //#define _RAISE 3
 #define _ARROW 4
-#define _SYMBOL 5
-//#define _MEDIA 6
-#define _FUNCTION 7
+#define _COPY 5
+#define _SYMBOL 6
+//#define _MEDIA 7
+#define _FUNCTION 8
 #define _SETTINGS 10
