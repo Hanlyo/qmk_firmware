@@ -15,12 +15,11 @@ enum {
 
 //Tap dance enums
 enum {
-  ARROW = 0,
-  SYMBOL,
-  FUNCTION,
-  LBRC,
+  LBRC = 0,
   RBRC,
-  ESC
+  CP,
+  ESC,
+  BSPC
 };
 
 
@@ -52,66 +51,6 @@ int cur_dance (qk_tap_dance_state_t *state) {
 }
 
 
-
-void changeSymbolLayerFin (qk_tap_dance_state_t *state, void *user_data) {
-
-  switch (cur_dance(state)) {
-    case SINGLE_TAP:
-        set_oneshot_layer(_SYMBOL, ONESHOT_START);
-    break;
-    case SINGLE_HOLD:
-        layer_on(_SYMBOL);
-    break;
-    case DOUBLE_TAP:
-        layer_invert(_SYMBOL);
-    break;
-  }
-}
-
-void changeSymbolLayerRes (qk_tap_dance_state_t *state, void *user_data) {
-
-  switch (cur_dance(state)) {
-    case SINGLE_TAP:
-        clear_oneshot_layer_state(ONESHOT_PRESSED);
-    break;
-    case SINGLE_HOLD:
-        layer_off(_SYMBOL);
-    break;
-    case DOUBLE_TAP:
-    break;
-  }
-}
-
-void changeFunctionLayerFin (qk_tap_dance_state_t *state, void *user_data) {
-
-  switch (cur_dance(state)) {
-    case SINGLE_TAP:
-        set_oneshot_layer(_SYMBOL, ONESHOT_START);
-    break;
-    case SINGLE_HOLD:
-        layer_on(_FUNCTION);
-    break;
-    case DOUBLE_TAP:
-        layer_invert(_FUNCTION);
-    break;
-  }
-}
-
-void changeFunctionLayerRes (qk_tap_dance_state_t *state, void *user_data) {
-
-  switch (cur_dance(state)) {
-    case SINGLE_TAP:
-        clear_oneshot_layer_state(ONESHOT_PRESSED);
-    break;
-    case SINGLE_HOLD:
-        layer_off(_FUNCTION);
-    break;
-    case DOUBLE_TAP:
-    break;
-  }
-}
-
-
 void LBRCFunction (qk_tap_dance_state_t *state, void *user_data) {
 
   switch (cur_dance(state)) {
@@ -136,27 +75,48 @@ void RBRCFunction (qk_tap_dance_state_t *state, void *user_data) {
   }
 }
 
+void CopyPasteFunctionFinished (qk_tap_dance_state_t *state, void *user_data) {
 
-void ESCFunction (qk_tap_dance_state_t *state, void *user_data) {
+    bool is_shift = false;
+    uint8_t one_shot_mods = get_oneshot_mods();
 
-  switch (cur_dance(state)) {
-    case SINGLE_TAP:
-        register_code(KC_ESC);
-    break;
-    case DOUBLE_TAP:
-        layer_clear();
-    break;
-  }
+    uint8_t saved_mods = 0;
+
+    if (get_mods() & MOD_MASK_CTRL) {
+        saved_mods = get_mods() & MOD_MASK_CTRL; // Mask off anything that isn't Shift
+        del_mods(saved_mods); // Remove any Shifts present
+        is_shift = true;
+    } else if (one_shot_mods & MOD_MASK_CTRL) {
+        saved_mods = 0; // Clear saved mods so the add_mods() below doesn't add Shifts back when it shouldn't
+        set_oneshot_mods(one_shot_mods & ~MOD_MASK_CTRL);
+        //is_shift = true;
+    }
+
+    switch (cur_dance(state)) {
+        case DOUBLE_TAP:
+            if (is_shift) {
+                SEND_STRING(SS_LCTRL("x"));
+            } else {
+                SEND_STRING(SS_LCTRL("c"));
+            }
+        break;
+        default:
+            if (is_shift) {
+                SEND_STRING(SS_LCTRL("x"));
+            } else {
+                SEND_STRING(SS_LCTRL("v"));
+            }
+        break;
+    }
+
+    add_mods(saved_mods);
 }
 
 
 
+
 qk_tap_dance_action_t tap_dance_actions[] = {
-  [SYMBOL]     = ACTION_TAP_DANCE_FN_ADVANCED     (NULL, changeSymbolLayerFin, changeSymbolLayerRes),
-  [FUNCTION]     = ACTION_TAP_DANCE_FN_ADVANCED     (NULL, changeFunctionLayerFin, changeFunctionLayerRes),
-  [LBRC]     = ACTION_TAP_DANCE_FN     (LBRCFunction),
-  [RBRC]     = ACTION_TAP_DANCE_FN     (RBRCFunction),
-  [ESC]     = ACTION_TAP_DANCE_FN     (ESCFunction)
-  //,
-  //[TD_COPY_PASTE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tap_dance_copy_paste_finished, NULL)
+    [LBRC]     = ACTION_TAP_DANCE_FN          (LBRCFunction),
+    [RBRC]     = ACTION_TAP_DANCE_FN          (RBRCFunction),
+    [CP]       = ACTION_TAP_DANCE_FN_ADVANCED (NULL, CopyPasteFunctionFinished, NULL)
 };
