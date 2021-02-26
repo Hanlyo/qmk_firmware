@@ -23,3 +23,5 @@ SLEEP_LED_ENABLE = no    # Breathing sleep LED during USB suspend
 
 
 TAP_DANCE_ENABLE = yes
+LEADER_ENABLE = yes
+DYNAMIC_MACRO_ENABLE = yes

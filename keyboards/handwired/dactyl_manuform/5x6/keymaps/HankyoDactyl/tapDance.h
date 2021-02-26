@@ -15,11 +15,7 @@ enum {
 
 //Tap dance enums
 enum {
-  LBRC = 0,
-  RBRC,
-  CP,
-  ESC,
-  BSPC
+  CP = 0
 };
 
 
@@ -50,30 +46,6 @@ int cur_dance (qk_tap_dance_state_t *state) {
   else return 8; //magic number. At some point this method will expand to work for more presses
 }
 
-
-void LBRCFunction (qk_tap_dance_state_t *state, void *user_data) {
-
-  switch (cur_dance(state)) {
-    case SINGLE_TAP:
-        register_code(KC_D);
-    break;
-    case DOUBLE_TAP:
-        register_code16(DE_LCBR);
-    break;
-  }
-}
-
-void RBRCFunction (qk_tap_dance_state_t *state, void *user_data) {
-
-  switch (cur_dance(state)) {
-    case SINGLE_TAP:
-        register_code(KC_F);
-    break;
-    case DOUBLE_TAP:
-        register_code16(DE_RCBR);
-    break;
-  }
-}
 
 void CopyPasteFunctionFinished (qk_tap_dance_state_t *state, void *user_data) {
 
@@ -116,7 +88,5 @@ void CopyPasteFunctionFinished (qk_tap_dance_state_t *state, void *user_data) {
 
 
 qk_tap_dance_action_t tap_dance_actions[] = {
-    [LBRC]     = ACTION_TAP_DANCE_FN          (LBRCFunction),
-    [RBRC]     = ACTION_TAP_DANCE_FN          (RBRCFunction),
     [CP]       = ACTION_TAP_DANCE_FN_ADVANCED (NULL, CopyPasteFunctionFinished, NULL)
 };
