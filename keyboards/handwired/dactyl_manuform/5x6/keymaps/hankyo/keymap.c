@@ -1,7 +1,7 @@
 #include QMK_KEYBOARD_H
 #include "keymap_german.h"
-#include "tapDance.h"
-#include "layer.h"
+#include "hankyo.h"
+#include "print.h"
 
 //
 #define CUT     LCTL(KC_X)
@@ -10,7 +10,8 @@
 #define UNDO    LCTL(DE_Z)
 #define REDO    LCTL(DE_Y)
 #define CTL_D   LCTL(KC_D)
-#define DEL_WRD LALT(KC_BSPC)
+#define BKSP_WRD LCTL(KC_BSPC)
+#define DEL_WRD LCTL(KC_DEL)
 #define SAVE    LCTL(KC_S)
 #define CTLT   LCTL(KC_T)
 #define CTLA   LCTL(KC_A)
@@ -18,6 +19,8 @@
 #define CTLW   LCTL(KC_W)
 #define WINE   LGUI(KC_E)
 
+#define WRD_LEFT   LCTL(KC_LEFT)
+#define WRD_RGHT   LCTL(KC_RGHT)
 
 // one shot modifierer
 #define OS_ALT  OSM (MOD_LALT)
@@ -26,40 +29,36 @@
 #define OS_SFT  OSM (MOD_LSFT)
 
 
-// tapDance
-#define TD_CP   TD(CP)  // copy paste
-#define TD_BSPC   TD(BSPC)
-
-
 // one shot layer
 #define OSL_ARW  OSL(_ARROW)
 #define OSL_SYM  OSL(_SYMBOL)
 #define OSL_MED  OSL(_MEDIA)
 #define OSL_FUN  OSL(_FUNCTION)
 
+
 // default layer
 #define DF_QWER  DF(_QWERTY)
 #define DF_KOY  DF(_KOY)
-#define DF_KOY_ALT  DF(_KOY_ALT)
 
 // other
 enum my_keycodes {
-    KC_BSPCDEL = SAFE_RANGE
+    KC_BSPCDEL = SAFE_RANGE,
+    LOG_ENABLE,
+    LOG_DISABLE
 };
 
+bool logEnable = true;
 
+// home row mods
+#define HR_H LGUI_T(KC_H)
+#define HR_A LALT_T(KC_A)
+#define HR_E LSFT_T(KC_E)
+#define HR_I LCTL_T(KC_I)
 
-// test
-#define MT_H MT(MOD_LGUI, KC_H)
-#define MT_A MT(MOD_LALT, KC_A)
-#define MT_E MT(MOD_LSFT, KC_E)
-#define MT_I MT(MOD_LCTL, KC_I)
-
-#define MT_T MT(MOD_RCTL, KC_T)
-#define MT_R MT(MOD_RSFT, KC_R)
-#define MT_N MT(MOD_LALT, KC_N)
-#define MT_S MT(MOD_RGUI, KC_S)
-
+#define HR_T LCTL_T(KC_T)
+#define HR_R LSFT_T(KC_R)
+#define HR_N LALT_T(KC_N)
+#define HR_S LGUI_T(KC_S)
 
 
 //
@@ -70,6 +69,10 @@ enum my_keycodes {
 #define GUI_L MT(MOD_RGUI, KC_L)
 
 
+// mod tap
+#define MT_SPC MT(MOD_LSFT, KC_SPC)
+#define MT_ENT MT(MOD_LSFT, KC_ENT)
+
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -78,39 +81,28 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_TAB , KC_Q  , KC_W  , KC_E  , KC_R  , KC_T  ,                         KC_Y  , KC_U  , KC_I  , KC_O  , KC_P  ,KC_LEAD,
      OS_SFT , KC_A  , KC_S  , KC_D  , KC_F  , KC_G  ,                         KC_H  , KC_J  , KC_K  , KC_L  ,DE_QUES,OS_SFT ,
      OS_CTL , KC_Z  , KC_X  , KC_C  , KC_V  , KC_B  ,                         KC_N  , KC_M  ,KC_COMM,KC_DOT ,KC_SLSH,OS_CTL ,
-                     OSL_SYM ,KC_LALT,                                                       KC_LGUI, OSL_SYM ,
+                     OSL_SYM,KC_LALT,                                                        KC_LGUI,OSL_SYM,
                                      KC_BSPC, KC_SPC,                        KC_ENT ,KC_BSPC,
                                      OSL_ARW, OS_SFT,                        OS_SFT, KC_DEL ,
                                      XXXXXXX,OSL_FUN,                        OSL_FUN,OSL_ARW
   ),
 
   [_KOY] = LAYOUT_5x6(
-     XXXXXXX, KC_1  , KC_2  , KC_3  , KC_4  , KC_5  ,                         KC_6  , KC_7  , KC_8  , KC_9  , KC_0  , KC_DEL,
-     KC_TAB , KC_K  ,KC_DOT , KC_O  ,KC_COMM, DE_Y  ,                         KC_V  , KC_G  , KC_C  , KC_L  , DE_Z  ,KC_LEAD,
-      KC_X  , KC_H  , KC_A  , KC_E  , KC_I  , KC_U  ,                         KC_D  , KC_T  , KC_R  , KC_N  , KC_S  , KC_J  ,
-     OS_CTL , KC_F  , KC_Q  ,KC_SLSH,XXXXXXX, KC_ESC,                         KC_B  , KC_P  , KC_W  , KC_M  ,XXXXXXX,OS_CTL ,
+     XXXXXXX, KC_1  , KC_2  , KC_3  , KC_4  , KC_5  ,                          KC_6  , KC_7  , KC_8  , KC_9  , KC_0  ,XXXXXXX,
+     XXXXXXX, KC_K  ,KC_DOT , KC_O  ,KC_COMM, DE_Y  ,                          KC_V  , KC_G  , KC_C  , KC_L  , DE_Z  ,XXXXXXX,
+    //   KC_X  , HR_H  , HR_A  , HR_E  , HR_I  , KC_U  ,                          KC_D  , HR_T  , HR_R  , HR_N  , HR_S  , KC_J  ,
+      KC_X  , KC_H  , KC_A  , KC_E  , KC_I  , KC_U  ,                          KC_D  , KC_T  , KC_R  , KC_N  , KC_S  , KC_J  ,
+     OS_CTL , KC_F  , KC_Q  ,KC_SLSH,KC_TAB, KC_ESC,                           KC_B  , KC_P  , KC_W  , KC_M  ,DE_SCLN,OS_CTL ,
                      OSL_SYM,KC_LALT,                                                       KC_LGUI, OSL_SYM,
                                      OS_SFT , KC_SPC,                        KC_ENT ,OS_SFT ,
                                      OSL_ARW, KC_BSPC,                       KC_BSPC ,OSL_ARW,
-                                     OSL_MED,OSL_FUN,                        OSL_FUN,OSL_MED
-  ),
-
-//     XXXXXXX, MT_H  , MT_A  , MT_E  , MT_I  , KC_U  ,                         KC_D  , MT_T  , MT_R  , MT_N  , MT_S  ,XXXXXXX,
-  [_KOY_ALT] = LAYOUT_5x6(
-     XXXXXXX, KC_1  , KC_2  , KC_3  , KC_4  , KC_5  ,                         KC_6  , KC_7  , KC_8  , KC_9  , KC_0  , KC_DEL,
-     KC_TAB , KC_K  ,KC_DOT , KC_O  ,KC_COMM, DE_Y  ,                         KC_V  , KC_G  , KC_C  , KC_L  , DE_Z  ,KC_LEAD,
-      KC_X  , KC_H  , KC_A  , KC_E  , KC_I  , KC_U  ,                         KC_D  , KC_T  , KC_R  , KC_N  , KC_S  , KC_J  ,
-     OS_CTL , KC_F  , KC_Q  ,KC_SLSH,XXXXXXX, KC_ESC,                         KC_B  , KC_P  , KC_W  , KC_M  ,XXXXXXX,OS_CTL ,
-                     OSL_SYM,KC_LALT,                                                       KC_LGUI, OSL_SYM,
-                                     OS_SFT , KC_SPC,                        KC_ENT ,OS_SFT ,
-                                     OSL_ARW, KC_BSPC,                       KC_BSPC ,OSL_ARW,
-                                     OSL_MED,OSL_FUN,                        OSL_FUN,OSL_MED
+                                     KC_LEAD,OSL_FUN,                        OSL_FUN,OSL_MED
   ),
 
   [_ARROW] = LAYOUT_5x6(
      _______,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,                        XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,_______,
-     _______,XXXXXXX, CTLW  , WINE  ,XXXXXXX, CTLT  ,                        XXXXXXX,KC_PGUP, KC_UP ,KC_PGDN,XXXXXXX,XXXXXXX,
-     _______, CTLA  , SAVE  , CTLD  ,XXXXXXX, UNDO  ,                        KC_HOME,KC_LEFT,KC_DOWN,KC_RGHT,KC_END ,XXXXXXX,
+     _______,XXXXXXX,XXXXXXX, SAVE  ,XXXXXXX,XXXXXXX,                        XXXXXXX,KC_PGUP, KC_UP ,KC_PGDN,XXXXXXX,XXXXXXX,
+     _______,XXXXXXX,KC_LGUI,KC_LSFT,KC_LCTL, UNDO  ,                        KC_HOME,KC_LEFT,KC_DOWN,KC_RGHT,KC_END ,XXXXXXX,
      _______, REDO  , CUT   , COPY  , PASTE ,_______,                        XXXXXXX,KC_BSPC,XXXXXXX,KC_DEL ,XXXXXXX,XXXXXXX,
                      _______,_______,                                                        _______,_______,
                                         _______,_______,                  _______,_______,
@@ -153,7 +145,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_SETTINGS] = LAYOUT_5x6(
      _______,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX, RESET ,                         RESET ,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,_______,
-     _______,DF_QWER,XXXXXXX, DF_KOY,XXXXXXX,XXXXXXX,                        XXXXXXX,DF_KOY_ALT,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,
+     _______,DF_QWER,XXXXXXX, DF_KOY,XXXXXXX,XXXXXXX,                        XXXXXXX,LOG_ENABLE,XXXXXXX,LOG_DISABLE,XXXXXXX,XXXXXXX,
      _______,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,                        XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,
      _______,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,_______,                        XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,
                      _______,_______,                                                        _______,_______,
@@ -185,6 +177,13 @@ uint32_t layer_state_set_user(uint32_t state) {
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+
+    if (logEnable) {
+        xprintf ("<start>col=%02d, row=%02d, pressed=%d, keycode=%d, layer=%s<end>\n",
+            record->event.key.col, record->event.key.row, record->event.pressed, keycode, "KOY");
+    }
+
+
     /*static uint8_t saved_mods = 0;
     uint8_t one_shot_mods = get_oneshot_mods();*/
 
@@ -217,43 +216,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             clear_mods();
             return true;
 
+        case LOG_ENABLE:
+            logEnable = true;
+        return false;
 
-    /*
- case RCTL_T(KC_N):
-        if (record->tap.count > 0) {
-            if (get_mods() & MOD_BIT(KC_RSHIFT)) {
-                unregister_mods(MOD_BIT(KC_RSHIFT));
-                tap_code(KC_E);
-                tap_code(KC_N);
-                add_mods(MOD_BIT(KC_RSHIFT));
-                return false;
-            }
-        }
-        return true;
-
-    case LALT_T(KC_A):
-        if (record->tap.count > 0) {
-            if (get_mods() & MOD_BIT(KC_LGUI)) {
-                unregister_mods(MOD_BIT(KC_LGUI));
-                tap_code(KC_H);
-                tap_code(KC_A);
-                add_mods(MOD_BIT(KC_LGUI));
-                return false;
-            }
-        }
-        return true;
-    }
-
-*/
-
-
-
-
+        case LOG_DISABLE:
+            logEnable = false;
+        return false;
 
         default:
             return true; // Process all other keycodes normally
     }
+
 }
+
+
+
 
 LEADER_EXTERNS();
 void matrix_scan_user(void) {
@@ -267,5 +245,87 @@ void matrix_scan_user(void) {
             unregister_code(KC_F4);
             unregister_code(KC_LALT);
         }
+
     }
 }
+
+const uint16_t PROGMEM c_copy[] =       {KC_A, KC_O, COMBO_END};
+const uint16_t PROGMEM c_paste[] =      {KC_O, KC_I, COMBO_END};
+const uint16_t PROGMEM c_cut[] =        {KC_A, KC_E, COMBO_END};
+
+const uint16_t PROGMEM c_del[] =        {KC_E, KC_I, COMBO_END};
+const uint16_t PROGMEM c_del_wrd[] =    {KC_A, KC_I, COMBO_END};
+const uint16_t PROGMEM c_bksp[] =       {KC_T, KC_R, COMBO_END};
+const uint16_t PROGMEM c_bksp_wrd[] =   {KC_T, KC_N, COMBO_END};
+
+const uint16_t PROGMEM c_undo[] =       {KC_DOT, KC_O, COMBO_END};
+const uint16_t PROGMEM c_redo[] =       {KC_O, KC_COMM, COMBO_END};
+
+const uint16_t PROGMEM c_save[] =       {KC_O, KC_E, COMBO_END};
+
+const uint16_t PROGMEM c_left[] =       {KC_P, KC_W, COMBO_END};
+const uint16_t PROGMEM c_right[] =      {KC_W, KC_M, COMBO_END};
+const uint16_t PROGMEM c_up[] =         {KC_P, KC_R, COMBO_END};
+const uint16_t PROGMEM c_down[] =       {KC_M, KC_R, COMBO_END};
+
+// const uint16_t PROGMEM c_home[] =       {KC_P, KC_R, COMBO_END};
+// const uint16_t PROGMEM c_end[] =        {KC_M, KC_R, COMBO_END};
+
+const uint16_t PROGMEM c_wrd_left[] =   {KC_P, KC_M, COMBO_END};
+const uint16_t PROGMEM c_wrd_rght[] =   {KC_W, DE_SCLN, COMBO_END};
+
+combo_t key_combos[COMBO_COUNT] = {
+    COMBO(c_copy,       COPY),
+    COMBO(c_paste,      PASTE),
+    COMBO(c_cut,        CUT),
+
+    COMBO(c_del,        KC_DEL),
+    COMBO(c_del_wrd,    DEL_WRD),
+    COMBO(c_bksp,       KC_BSPC),
+    COMBO(c_bksp_wrd,   BKSP_WRD),
+
+    COMBO(c_undo,       UNDO),
+    COMBO(c_redo,       REDO),
+
+    COMBO(c_save,       SAVE),
+
+    COMBO(c_left,       KC_LEFT),
+    COMBO(c_right,      KC_RGHT),
+    COMBO(c_up,         KC_UP),
+    COMBO(c_down,       KC_DOWN),
+
+    // COMBO(c_home,       KC_HOME),
+    // COMBO(c_end,        KC_END),
+
+    COMBO(c_wrd_rght,   WRD_RGHT),
+    COMBO(c_wrd_left,   WRD_LEFT)
+
+};
+
+
+
+// TODO
+
+/*
+combos vom baselayer entfernen
+
+ctlt a auf linker seite
+
+CTLT
+ctl shift t
+
+CTLW
+WINE
+
+home
+end
+pgup
+pgdn
+
+enter zusätzlich auf die linke seite
+
+ausprobieren:
+- und f tauschen
+- ctrl und ; ctrl je auf eine taste
+
+*/

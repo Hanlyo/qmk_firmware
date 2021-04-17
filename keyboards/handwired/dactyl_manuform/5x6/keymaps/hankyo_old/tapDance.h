@@ -1,4 +1,3 @@
-#include "layer.h"
 #include "keymap_german.h"
 
 
