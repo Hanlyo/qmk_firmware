@@ -18,4 +18,4 @@
 //#define PERMISSIVE_HOLD
 
 #define COMBO_TERM 30
-#define COMBO_COUNT 16
+#define COMBO_COUNT 18

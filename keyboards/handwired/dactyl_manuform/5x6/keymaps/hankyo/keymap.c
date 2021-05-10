@@ -34,6 +34,7 @@
 #define OSL_SYM  OSL(_SYMBOL)
 #define OSL_MED  OSL(_MEDIA)
 #define OSL_FUN  OSL(_FUNCTION)
+#define OSL_MSE  OSL(_MOUSE)
 
 
 // default layer
@@ -96,7 +97,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                      OSL_SYM,KC_LALT,                                                       KC_LGUI, OSL_SYM,
                                      OS_SFT , KC_SPC,                        KC_ENT ,OS_SFT ,
                                      OSL_ARW, KC_BSPC,                       KC_BSPC ,OSL_ARW,
-                                     KC_LEAD,OSL_FUN,                        OSL_FUN,OSL_MED
+                                     OSL_MSE,OSL_FUN,                        OSL_FUN,OSL_MED
   ),
 
   [_ARROW] = LAYOUT_5x6(
@@ -104,6 +105,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      _______,XXXXXXX,XXXXXXX, SAVE  ,XXXXXXX,XXXXXXX,                        XXXXXXX,KC_PGUP, KC_UP ,KC_PGDN,XXXXXXX,XXXXXXX,
      _______,XXXXXXX,KC_LGUI,KC_LSFT,KC_LCTL, UNDO  ,                        KC_HOME,KC_LEFT,KC_DOWN,KC_RGHT,KC_END ,XXXXXXX,
      _______, REDO  , CUT   , COPY  , PASTE ,_______,                        XXXXXXX,KC_BSPC,XXXXXXX,KC_DEL ,XXXXXXX,XXXXXXX,
+                     _______,_______,                                                        _______,_______,
+                                        _______,_______,                  _______,_______,
+                                        _______,_______,                  _______,_______,
+                                        _______,_______,                  _______,_______
+  ),
+
+  [_MOUSE] = LAYOUT_5x6(
+     _______,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,                        XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,_______,
+     _______,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,                        XXXXXXX,KC_WH_D,KC_MS_U,KC_WH_U,XXXXXXX,XXXXXXX,
+     _______,XXXXXXX,KC_LGUI,KC_LSFT,KC_LCTL,XXXXXXX,                        KC_WH_L,KC_MS_L,KC_MS_D,KC_MS_R,KC_WH_R,XXXXXXX,
+     _______,XXXXXXX,KC_BTN1,KC_BTN3,KC_BTN2,XXXXXXX,                        XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,
                      _______,_______,                                                        _______,_______,
                                         _______,_______,                  _______,_______,
                                         _______,_______,                  _______,_______,
@@ -179,9 +191,17 @@ uint32_t layer_state_set_user(uint32_t state) {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     if (logEnable) {
-        xprintf ("<start>col=%02d, row=%02d, pressed=%d, keycode=%d, layer=%s<end>\n",
-            record->event.key.col, record->event.key.row, record->event.pressed, keycode, "KOY");
+        if (record->event.pressed) {
+            xprintf ("<start>c=%02d, r=%02d, k=%d, l=%d<end>\n",
+                record->event.key.col, record->event.key.row, keycode, get_highest_layer(layer_state));
+        }
     }
+
+    // if (logEnable) {
+    //     if (record->event.pressed) {
+    //             uprintf("0x%04X,%u,%u,%u\n", keycode, record->event.key.row, record->event.key.col, get_highest_layer(layer_state));
+    //     }
+    // }
 
 
     /*static uint8_t saved_mods = 0;
@@ -268,6 +288,9 @@ const uint16_t PROGMEM c_right[] =      {KC_W, KC_M, COMBO_END};
 const uint16_t PROGMEM c_up[] =         {KC_P, KC_R, COMBO_END};
 const uint16_t PROGMEM c_down[] =       {KC_M, KC_R, COMBO_END};
 
+const uint16_t PROGMEM c_d[] =          {KC_I, KC_U, COMBO_END};
+const uint16_t PROGMEM c_enter[] =      {KC_Q, KC_SLSH, COMBO_END};
+
 // const uint16_t PROGMEM c_home[] =       {KC_P, KC_R, COMBO_END};
 // const uint16_t PROGMEM c_end[] =        {KC_M, KC_R, COMBO_END};
 
@@ -293,6 +316,9 @@ combo_t key_combos[COMBO_COUNT] = {
     COMBO(c_right,      KC_RGHT),
     COMBO(c_up,         KC_UP),
     COMBO(c_down,       KC_DOWN),
+
+    COMBO(c_d,          CTL_D),
+    COMBO(c_enter,      KC_ENT),
 
     // COMBO(c_home,       KC_HOME),
     // COMBO(c_end,        KC_END),

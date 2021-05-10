@@ -8,6 +8,7 @@
 #define _QWERTY 1
 #define _GAME 3
 #define _ARROW 4
+#define _MOUSE 5
 #define _SYMBOL 6
 #define _FUNCTION 8
 #define _MEDIA 9
